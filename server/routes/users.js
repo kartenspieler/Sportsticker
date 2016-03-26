@@ -17,11 +17,23 @@ router.post('/create', function(req, res, next) {
 	var password = req.body.password;
 	var ciphertext = CryptoJS.AES.encrypt(password, credentials.secret);
 
-	if (validator.isValidEmail(email) && password.length > 6) {
+	if (!validator.isValidEmail(email)) {
+		res.send('das nicht cool');
+		return;
+	};
 
-	} else {
-		
-	}
+	if (!userdb.isDBAvailable) {
+		res.send('verbindung nicht mölich');
+		return;
+	};
+
+	if (userdb.isUserAlreadyInDB(email)) {
+		res.send('nutzer bereits in datenbank');
+		return;
+	};
+
+	userdb.addUser(email, ciphertext);
+	res.redirect('/')
 });
 
 module.exports = router;
