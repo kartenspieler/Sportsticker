@@ -23,10 +23,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('port', process.env.PORT || 3000);
+app.use(express.static(__dirname + '/public'));
 
 app.use('/', routes);
-app.use('/users', users);
+// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -36,7 +37,6 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -59,5 +59,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.listen(app.get('port'), function(){
+  console.log('Express started on http://localhost:' +
+    app.get('port') + '; press Ctrl-C to terminate');
+});
 
 module.exports = app;
