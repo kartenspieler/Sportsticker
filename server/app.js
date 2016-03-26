@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var credentials = require('./credentials.js');
 
 var routes = require('./routes/index');
 var admin = require('./routes/admin');
@@ -24,6 +25,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('cookie-parser')(credentials.secret));
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
 
