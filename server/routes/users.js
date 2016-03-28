@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 var validator = require('../validators.js');
 var userdb = require('../userdb.js');
 var CryptoJS = require("crypto-js");
